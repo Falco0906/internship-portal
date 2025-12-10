@@ -1,0 +1,157 @@
+.manage-internships {
+  padding: 2rem 0;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 2rem;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid #c3e6cb;
+  text-align: center;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid #f5c6cb;
+  text-align: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
+  color: #666;
+}
+
+.internships-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.internship-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.internship-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  border-bottom: 4px solid #764ba2;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.position {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+}
+
+.card-body p {
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+.card-body strong {
+  color: #2c3e50;
+}
+
+.dates {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.dates p {
+  margin: 0.5rem 0;
+}
+
+.description,
+.requirements {
+  color: #555;
+  font-style: italic;
+  line-height: 1.6;
+  padding: 0.5rem 0;
+}
+
+.card-footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.card-footer button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.card-footer button.edit {
+  background-color: #f39c12;
+  color: white;
+}
+
+.card-footer button.edit:hover {
+  background-color: #d68910;
+}
+
+.card-footer button.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.card-footer button.delete:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .internships-grid {
+    grid-template-columns: 1fr;
+  }
+}

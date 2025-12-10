@@ -1,0 +1,226 @@
+{
+  "info": {
+    "name": "Internship Portal API - CRUD Operations",
+    "description": "Complete CRUD API testing collection for MERN Internship Portal Application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. CREATE - Add New Internship",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"companyName\": \"Google\",\n  \"position\": \"Software Engineer Intern\",\n  \"duration\": \"3 months\",\n  \"stipend\": 50000,\n  \"location\": \"Bangalore\",\n  \"description\": \"Work with Google's cloud infrastructure team on exciting projects\",\n  \"requirements\": \"Strong in DSA, Good communication skills, Proficiency in Java or Python\",\n  \"applicationDeadline\": \"2025-12-31\",\n  \"startDate\": \"2025-01-15\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/internships",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships"
+          ]
+        },
+        "description": "Add a new internship to the database"
+      }
+    },
+    {
+      "name": "2. CREATE - Add Microsoft Internship",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"companyName\": \"Microsoft\",\n  \"position\": \"Cloud Solutions Intern\",\n  \"duration\": \"6 months\",\n  \"stipend\": 45000,\n  \"location\": \"Pune\",\n  \"description\": \"Develop and test cloud solutions on Azure platform\",\n  \"requirements\": \"Knowledge of cloud computing, C# or Python, Problem solving\",\n  \"applicationDeadline\": \"2025-12-15\",\n  \"startDate\": \"2025-02-01\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/internships",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships"
+          ]
+        },
+        "description": "Add another internship (Microsoft)"
+      }
+    },
+    {
+      "name": "3. CREATE - Add Amazon Internship",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"companyName\": \"Amazon\",\n  \"position\": \"Data Science Intern\",\n  \"duration\": \"4 months\",\n  \"stipend\": 55000,\n  \"location\": \"Delhi\",\n  \"description\": \"Build machine learning models for recommendation systems\",\n  \"requirements\": \"ML knowledge, Python, Statistics, SQL basics\",\n  \"applicationDeadline\": \"2025-12-20\",\n  \"startDate\": \"2025-01-20\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/internships",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships"
+          ]
+        },
+        "description": "Add Amazon internship listing"
+      }
+    },
+    {
+      "name": "4. READ - Get All Internships",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5001/api/internships",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships"
+          ]
+        },
+        "description": "Retrieve all internships from the database"
+      }
+    },
+    {
+      "name": "5. READ - Get Internship by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5001/api/internships/{{internship_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships",
+            "{{internship_id}}"
+          ]
+        },
+        "description": "Get a specific internship by its MongoDB ID. Replace {{internship_id}} with actual ID from GET all response"
+      }
+    },
+    {
+      "name": "6. UPDATE - Modify Internship (Change Stipend)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stipend\": 60000\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/internships/{{internship_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships",
+            "{{internship_id}}"
+          ]
+        },
+        "description": "Update an internship's stipend. Replace {{internship_id}} with actual ID"
+      }
+    },
+    {
+      "name": "7. UPDATE - Modify Multiple Fields",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"position\": \"Senior Software Engineer Intern\",\n  \"stipend\": 65000,\n  \"location\": \"Hyderabad\",\n  \"description\": \"Updated description with more exciting opportunities\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/internships/{{internship_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships",
+            "{{internship_id}}"
+          ]
+        },
+        "description": "Update multiple fields of an internship record"
+      }
+    },
+    {
+      "name": "8. DELETE - Remove Internship",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5001/api/internships/{{internship_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "api",
+            "internships",
+            "{{internship_id}}"
+          ]
+        },
+        "description": "Delete an internship from the database. Replace {{internship_id}} with actual ID"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "internship_id",
+      "value": "",
+      "type": "string",
+      "description": "MongoDB ObjectId of an internship - copy from GET All response"
+    }
+  ]
+}
