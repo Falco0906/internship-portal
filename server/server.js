@@ -13,19 +13,31 @@ app.use(express.json());
 // MongoDB Connection
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/internship_portal';
 
-mongoose.connect(mongoURI, {
+// MongoDB connection options
+const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-  socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
-})
+  serverSelectionTimeoutMS: 30000, // 30 seconds
+  socketTimeoutMS: 45000, // 45 seconds
+  maxPoolSize: 10, // Maintain up to 10 socket connections
+  minPoolSize: 2, // Maintain at least 2 socket connections
+  retryWrites: true,
+  w: 'majority'
+};
+
+mongoose.connect(mongoURI, mongooseOptions)
   .then(() => {
     console.log('✅ MongoDB connected successfully');
     console.log('Database:', mongoose.connection.name);
+    console.log('Host:', mongoose.connection.host);
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
-    console.error('Error details:', err);
+    console.error('Error name:', err.name);
+    console.error('Error code:', err.code);
+    if (err.reason) {
+      console.error('Topology type:', err.reason.type);
+    }
     console.error('Connection string:', mongoURI.replace(/:[^:]*@/, ':****@'));
   });
 
