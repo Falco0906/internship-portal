@@ -11,7 +11,18 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
+// IMPORTANT: Connection string must include database name (/internship_portal)
+// Set MONGODB_URI in Render Environment tab, not here!
+// Format: mongodb+srv://username:password@cluster.mongodb.net/internship_portal?retryWrites=true&w=majority
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/internship_portal';
+
+// Auto-fix connection string if database name is missing (for common cases)
+let finalMongoURI = mongoURI;
+if (mongoURI.includes('mongodb+srv://') && !mongoURI.includes('/internship_portal') && mongoURI.includes('/?')) {
+  // Replace /? with /internship_portal? and update query params
+  finalMongoURI = mongoURI.replace('/?', '/internship_portal?').replace('appName=Cluster0', 'retryWrites=true&w=majority');
+  console.log('⚠️  Fixed connection string: Added database name and updated query parameters');
+}
 
 // MongoDB connection options
 const mongooseOptions = {
@@ -25,7 +36,7 @@ const mongooseOptions = {
   w: 'majority'
 };
 
-mongoose.connect(mongoURI, mongooseOptions)
+mongoose.connect(finalMongoURI, mongooseOptions)
   .then(() => {
     console.log('✅ MongoDB connected successfully');
     console.log('Database:', mongoose.connection.name);
@@ -38,7 +49,7 @@ mongoose.connect(mongoURI, mongooseOptions)
     if (err.reason) {
       console.error('Topology type:', err.reason.type);
     }
-    console.error('Connection string:', mongoURI.replace(/:[^:]*@/, ':****@'));
+    console.error('Connection string:', finalMongoURI.replace(/:[^:]*@/, ':****@'));
   });
 
 // Handle MongoDB connection events
