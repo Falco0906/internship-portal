@@ -25,9 +25,13 @@ This guide will help you deploy the Internship Portal application to Render.
 3. Click "New +" → "Blueprint"
 4. Connect your GitHub repository
 5. Render will automatically detect `render.yaml` and configure the service
-6. Add environment variables:
-   - `MONGODB_URI`: Your MongoDB Atlas connection string
-   - `NODE_ENV`: `production`
+6. **IMPORTANT: Add environment variables in Render Dashboard:**
+   - Go to your service → **Environment** tab
+   - Click **Add Environment Variable**
+   - Add `MONGODB_URI`: Your MongoDB Atlas connection string
+     - Example: `mongodb+srv://username:password@cluster.mongodb.net/internship_portal?retryWrites=true&w=majority`
+   - `NODE_ENV` is already set to `production` in render.yaml
+   - **Note**: Render does NOT read `.env` files - you MUST set variables in the dashboard!
 
 ### Option B: Manual Setup
 
@@ -79,9 +83,11 @@ This guide will help you deploy the Internship Portal application to Render.
 - Check build logs for specific errors
 
 ### MongoDB Connection Error
-- Verify your MongoDB Atlas IP whitelist includes Render's IPs
+- **⚠️ CRITICAL**: Make sure `MONGODB_URI` is set in Render Dashboard → Environment tab (NOT just in .env file)
+- Verify your MongoDB Atlas IP whitelist includes Render's IPs (use `0.0.0.0/0` for testing)
 - Check that your connection string is correct
 - Ensure database user credentials are correct
+- Check Render logs for specific error messages
 
 ### API Not Working
 - Verify `NODE_ENV=production` is set
