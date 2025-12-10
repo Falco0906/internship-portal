@@ -1,20 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const Internship = require('../models/Internship');
+const mongoose = require('mongoose');
+
+// Async error wrapper
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
 
 // GET all internships
-router.get('/', async (req, res) => {
-  try {
-    const internships = await Internship.find().sort({ createdAt: -1 });
-    res.json(internships);
-  } catch (err) {
-    console.error('Error fetching internships:', err);
-    res.status(500).json({ 
-      message: 'Failed to fetch internships',
-      error: err.message 
+router.get('/', asyncHandler(async (req, res) => {
+  // Check MongoDB connection before querying
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ 
+      message: 'Database connection not ready',
+      error: 'MongoDB connection is not established',
+      readyState: mongoose.connection.readyState
     });
   }
-});
+  
+  const internships = await Internship.find().sort({ createdAt: -1 });
+  res.json(internships || []);
+}));
 
 // GET single internship by ID
 router.get('/:id', async (req, res) => {

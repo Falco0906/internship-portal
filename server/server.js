@@ -16,20 +16,47 @@ const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/internshi
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+  socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
 })
-  .then(() => console.log('✅ MongoDB connected successfully'))
+  .then(() => {
+    console.log('✅ MongoDB connected successfully');
+    console.log('Database:', mongoose.connection.name);
+  })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
+    console.error('Error details:', err);
     console.error('Connection string:', mongoURI.replace(/:[^:]*@/, ':****@'));
   });
 
+// Handle MongoDB connection events
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('MongoDB disconnected');
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('✅ MongoDB reconnected');
+});
+
 // MongoDB connection check middleware
 const checkMongoConnection = (req, res, next) => {
-  if (mongoose.connection.readyState !== 1) {
+  const readyState = mongoose.connection.readyState;
+  // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+  if (readyState === 0) {
+    console.error('MongoDB is disconnected. ReadyState:', readyState);
     return res.status(503).json({ 
       error: 'Database connection not available',
-      message: 'Please check MongoDB connection string'
+      message: 'MongoDB is disconnected. Please check connection string.',
+      readyState: readyState
     });
+  }
+  // Allow connecting state (2) to proceed, but log a warning
+  if (readyState === 2) {
+    console.warn('MongoDB is still connecting. ReadyState:', readyState);
   }
   next();
 };
