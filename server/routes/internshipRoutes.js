@@ -8,7 +8,11 @@ router.get('/', async (req, res) => {
     const internships = await Internship.find().sort({ createdAt: -1 });
     res.json(internships);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Error fetching internships:', err);
+    res.status(500).json({ 
+      message: 'Failed to fetch internships',
+      error: err.message 
+    });
   }
 });
 
